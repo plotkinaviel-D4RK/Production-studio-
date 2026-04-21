@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Production Studio Prototype</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Local 2D Scene Lab</p>
+          <h1>Build, keyframe, and preview animated scenes.</h1>
+          <p class="intro">
+            A fast local prototype for shaping the animation workflow we want
+            before committing to deeper OpenToonz integration.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <button id="playPause" class="primary">Play</button>
+          <button id="resetScene">Reset</button>
+          <button id="exportScene">Export JSON</button>
+          <label class="file-button">
+            Import JSON
+            <input id="importScene" type="file" accept="application/json" />
+          </label>
+        </div>
+      </section>
+
+      <section class="prompt-lab">
+        <div>
+          <p class="eyebrow">Prompt Builder</p>
+          <h2>Describe a scene and let the prototype build it.</h2>
+        </div>
+        <div class="prompt-controls">
+          <textarea
+            id="scenePrompt"
+            rows="3"
+            placeholder="Try: sunset beach with two clouds, a big sun, mountains, and a walking character"
+          ></textarea>
+          <button id="generateScene" class="primary">Create Scene</button>
+        </div>
+        <p id="promptStatus" class="prompt-status">AI connects through the local server when `OPENAI_API_KEY` is set.</p>
+      </section>
+
+      <section class="three-lab">
+        <div class="three-copy">
+          <p class="eyebrow">3D Battle Lab</p>
+          <h2>Build a battle in four clear steps.</h2>
+          <p class="intro">
+            Use the working PNG/card tools now. The Man Hunt 3D generator needs
+            extra Python setup before it can create real GLB models.
+          </p>
+
+          <section class="workflow-card">
+            <div class="step-badge">1</div>
+            <div>
+              <h3>Scene Setup</h3>
+              <p>Describe the arena mood, then generate or randomize the 3D space.</p>
+            </div>
+            <textarea
+              id="threePrompt"
+              rows="3"
+              placeholder="Try: realistic night creature battle with lightning, forest arena, blue monster vs fire monster"
+            ></textarea>
+            <div class="three-actions">
+              <button id="generate3dBattle" class="primary">Create 3D Arena</button>
+              <button id="randomize3d">Randomize Arena</button>
+            </div>
+          </section>
+
+          <section class="workflow-card character-maker">
+            <div class="step-badge">2</div>
+            <div class="workflow-fill">
+              <h3>Character Studio</h3>
+              <p>Create PNG character cards. These work immediately as flat fighters.</p>
+              <div class="maker-layout">
+                <canvas id="characterCanvas" width="512" height="512" aria-label="PNG character drawing canvas"></canvas>
+                <div class="maker-side">
+                  <label>
+                    Character Prompt
+                    <input id="characterPrompt" type="text" placeholder="blue fire lizard, horned alien, shadow beast" />
+                  </label>
+                  <label>
+                    Main Color
+                    <input id="characterColor" type="color" value="#4e6ee8" />
+                  </label>
+                  <div class="maker-controls">
+                    <button id="drawCharacterPng" class="primary">Quick Draw</button>
+                    <button id="randomCharacterCard">Random Character</button>
+                    <button id="saveCharacterCard">Save Character</button>
+                    <button id="clearCharacterPng">Clear Canvas</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="workflow-card">
+            <div class="step-badge">3</div>
+            <div>
+              <h3>Saved Characters</h3>
+              <p>Click Left or Right on a card to place it cleanly into the scene.</p>
+              <div id="characterLibrary" class="character-library"></div>
+            </div>
+          </section>
+
+          <section class="workflow-card">
+            <div class="step-badge">3D</div>
+            <div>
+              <h3>Outfit Asset Library</h3>
+              <p>Use the downloaded Modular Character Outfits as real 3D fighters.</p>
+              <div id="outfitLibrary" class="asset-library"></div>
+            </div>
+          </section>
+
+          <section class="workflow-card">
+            <div class="step-badge">4</div>
+            <div class="workflow-fill">
+              <h3>Fighter Slots</h3>
+              <p>Use PNG fighters now, import GLB models, or try Man Hunt 3D after setup.</p>
+              <div class="slot-grid">
+                <div class="slot-card">
+                  <strong>Left Fighter</strong>
+                  <span id="leftSlotName">Procedural placeholder</span>
+                  <button id="placePngLeft">Place Current PNG</button>
+                  <button id="generateManhuntLeft" class="disabled-tool">Generate 3D From PNG</button>
+                  <label class="file-button">
+                    Import Left GLB
+                    <input id="leftModelFile" type="file" accept=".glb,model/gltf-binary" />
+                  </label>
+                </div>
+                <div class="slot-card">
+                  <strong>Right Fighter</strong>
+                  <span id="rightSlotName">Procedural placeholder</span>
+                  <button id="placePngRight">Place Current PNG</button>
+                  <button id="generateManhuntRight" class="disabled-tool">Generate 3D From PNG</button>
+                  <label class="file-button">
+                    Import Right GLB
+                    <input id="rightModelFile" type="file" accept=".glb,model/gltf-binary" />
+                  </label>
+                </div>
+              </div>
+              <button id="fight3d" class="primary full">Start Fight Animation</button>
+            </div>
+          </section>
+
+          <section class="workflow-card warning-card">
+            <div class="step-badge">!</div>
+            <div>
+              <h3>3D Generator Status</h3>
+              <p id="generatorStatus">Checking Man Hunt generator setup...</p>
+            </div>
+          </section>
+
+          <p id="threeStatus" class="prompt-status">Starting local Three.js renderer...</p>
+        </div>
+        <div class="three-stage">
+          <canvas id="threeStage" aria-label="3D battle scene"></canvas>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <aside class="panel">
+          <div class="panel-header">
+            <h2>Scene</h2>
+            <span id="sceneMeta">24 fps</span>
+          </div>
+
+          <label>
+            Background
+            <input id="backgroundColor" type="color" value="#f3d7a1" />
+          </label>
+
+          <div class="tool-grid">
+            <button data-add="circle">Add Sun</button>
+            <button data-add="cloud">Add Cloud</button>
+            <button data-add="rect">Add Block</button>
+            <button data-add="character">Add Character</button>
+            <button data-add="monster">Add Monster</button>
+            <button id="battleDemo">Battle Demo</button>
+          </div>
+
+          <div class="panel-header compact">
+            <h2>Layers</h2>
+            <button id="deleteLayer" class="danger">Delete</button>
+          </div>
+          <div id="layerList" class="layer-list"></div>
+        </aside>
+
+        <section class="stage-wrap">
+          <canvas id="stage" width="1280" height="720" aria-label="Animation stage"></canvas>
+        </section>
+
+        <aside class="panel inspector">
+          <div class="panel-header">
+            <h2>Inspector</h2>
+            <span id="selectedName">None</span>
+          </div>
+
+          <label>
+            Label
+            <input id="propName" type="text" />
+          </label>
+
+          <div class="split">
+            <label>
+              X
+              <input id="propX" type="number" />
+            </label>
+            <label>
+              Y
+              <input id="propY" type="number" />
+            </label>
+          </div>
+
+          <div class="split">
+            <label>
+              Scale
+              <input id="propScale" type="number" step="0.05" />
+            </label>
+            <label>
+              Rotation
+              <input id="propRotation" type="number" />
+            </label>
+          </div>
+
+          <label>
+            Color
+            <input id="propColor" type="color" />
+          </label>
+
+          <button id="setKeyframe" class="primary full">Set Keyframe</button>
+          <p class="hint">
+            Drag objects on the canvas, move the playhead, then set keyframes to
+            create motion.
+          </p>
+        </aside>
+      </section>
+
+      <section class="timeline">
+        <div class="time-row">
+          <strong id="timeLabel">Frame 0</strong>
+          <input id="frameSlider" type="range" min="0" max="144" value="0" />
+          <span>Frame 144</span>
+        </div>
+        <div id="keyframeTrack" class="keyframe-track"></div>
+      </section>
+    </main>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "/vendor/three/build/three.module.js",
+          "three/addons/": "/vendor/three/examples/jsm/"
+        }
+      }
+    </script>
+    <script>
+      window.addEventListener("error", (event) => {
+        const status = document.querySelector("#threeStatus");
+        if (status) status.textContent = `3D error: ${event.message}`;
+      });
+      window.addEventListener("unhandledrejection", (event) => {
+        const status = document.querySelector("#threeStatus");
+        if (status) status.textContent = `3D error: ${event.reason?.message || event.reason}`;
+      });
+    </script>
+    <script src="./app.js" type="module"></script>
+    <script src="./three-battle.js" type="module"></script>
+  </body>
+</html>

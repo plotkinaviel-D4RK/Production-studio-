@@ -1,0 +1,14 @@
+.DS_Store
+node_modules/
+npm-debug.log*
+
+# Large external source checkout kept locally for reference.
+opentoonz/
+
+# Local/editor files
+.env
+.env.*
+.vscode/
+
+# Generated temp files
+*.log
