@@ -74,7 +74,7 @@ const sceneSchema = {
 };
 
 function safePath(urlPath) {
-  const requested = normalize(decodeURIComponent(urlPath.split("?")[0]));
+  const requested = decodeURIComponent(urlPath.split("?")[0]).replace(/\\/g, "/");
   if (requested.startsWith("/vendor/three/")) {
     const vendorPath = requested.replace("/vendor/three/", "node_modules/three/");
     const filePath = resolve(join(packageRoot, vendorPath));
@@ -85,7 +85,7 @@ function safePath(urlPath) {
     return manHuntModel;
   }
 
-  const filePath = resolve(join(root, requested === "/" ? "index.html" : requested));
+  const filePath = resolve(join(root, normalize(requested === "/" ? "index.html" : requested)));
   return filePath.startsWith(root) ? filePath : null;
 }
 

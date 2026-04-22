@@ -1,17 +1,25 @@
 :root {
-  --ink: #1e1a16;
-  --muted: #71685e;
-  --paper: #fff9ee;
-  --panel: rgba(255, 249, 238, 0.88);
-  --line: rgba(30, 26, 22, 0.14);
-  --accent: #e85d3f;
-  --accent-dark: #a83624;
-  --blue: #2d6f8f;
-  --shadow: 0 24px 70px rgba(45, 34, 20, 0.18);
+  --ink: #171b24;
+  --muted: #667085;
+  --paper: #f7f8fb;
+  --panel: rgba(255, 255, 255, 0.92);
+  --panel-solid: #ffffff;
+  --line: rgba(23, 27, 36, 0.12);
+  --accent: #db4d36;
+  --accent-dark: #a93627;
+  --blue: #267c9b;
+  --green: #547a54;
+  --gold: #bd8b32;
+  --shadow: 0 18px 48px rgba(17, 24, 39, 0.12);
+  --radius: 8px;
 }
 
 * {
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -20,9 +28,9 @@ body {
   color: var(--ink);
   font-family: Georgia, "Times New Roman", serif;
   background:
-    radial-gradient(circle at 20% 20%, rgba(232, 93, 63, 0.22), transparent 28rem),
-    radial-gradient(circle at 80% 8%, rgba(45, 111, 143, 0.24), transparent 24rem),
-    linear-gradient(135deg, #f5dcae 0%, #f9ecd1 46%, #d8e6dc 100%);
+    linear-gradient(135deg, rgba(219, 77, 54, 0.12), transparent 34%),
+    linear-gradient(225deg, rgba(38, 124, 155, 0.14), transparent 38%),
+    linear-gradient(180deg, #f4f6f8 0%, #e8edf0 100%);
 }
 
 button,
@@ -33,11 +41,12 @@ input {
 button,
 .file-button {
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: var(--radius);
   color: var(--ink);
-  background: rgba(255, 255, 255, 0.58);
+  background: rgba(255, 255, 255, 0.78);
   cursor: pointer;
-  padding: 0.68rem 1rem;
+  min-height: 2.65rem;
+  padding: 0.62rem 0.9rem;
   transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
 }
 
@@ -64,10 +73,10 @@ button:hover,
 
 .shell {
   display: grid;
-  gap: 1rem;
-  width: min(1500px, calc(100vw - 2rem));
+  gap: 1.5rem;
+  width: min(1580px, calc(100vw - 1.5rem));
   margin: 0 auto;
-  padding: 1rem 0;
+  padding: 0.75rem 0 1.5rem;
 }
 
 .hero,
@@ -76,49 +85,68 @@ button:hover,
 .workspace,
 .timeline {
   border: 1px solid var(--line);
-  border-radius: 34px;
+  border-radius: var(--radius);
   background: var(--panel);
   box-shadow: var(--shadow);
   backdrop-filter: blur(18px);
+  scroll-margin-top: 1rem;
 }
 
 .hero {
   display: flex;
-  align-items: end;
+  align-items: center;
   justify-content: space-between;
   gap: 2rem;
-  padding: 1.4rem;
+  min-height: clamp(420px, 52svh, 620px);
+  padding: clamp(1.25rem, 3vw, 3rem);
 }
 
 .prompt-lab {
   display: grid;
-  grid-template-columns: minmax(240px, 0.55fr) minmax(320px, 1fr);
+  grid-template-columns: minmax(220px, 0.42fr) minmax(320px, 1fr);
   gap: 1rem;
   align-items: end;
-  padding: 1.2rem;
+  min-height: clamp(320px, 42svh, 460px);
+  padding: clamp(1.25rem, 2.6vw, 2.4rem);
 }
 
 .three-lab {
   display: grid;
-  grid-template-columns: minmax(320px, 0.42fr) minmax(0, 1fr);
-  gap: 1rem;
-  min-height: 640px;
-  padding: 1rem;
+  grid-template-columns: 1fr;
+  gap: clamp(1rem, 2vw, 1.6rem);
+  align-items: start;
+  min-height: auto;
+  padding: clamp(1rem, 2vw, 1.5rem);
 }
 
-.three-copy {
+.three-header {
   display: grid;
   align-content: start;
-  gap: 0.9rem;
-  padding: 1rem;
+  gap: 0.55rem;
+  padding: 0;
 }
 
-.three-copy h2 {
+.three-header h2 {
   max-width: 520px;
   margin-bottom: 0;
-  font-size: clamp(1.7rem, 3.8vw, 3.6rem);
-  line-height: 0.94;
-  letter-spacing: -0.05em;
+  font-size: clamp(1.55rem, 2.4vw, 2.75rem);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.battle-board {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.34fr);
+  gap: clamp(1rem, 2vw, 1.4rem);
+  align-items: stretch;
+  min-height: calc(100svh - 8.5rem);
+}
+
+.production-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: start;
 }
 
 .three-actions {
@@ -130,12 +158,23 @@ button:hover,
 
 .workflow-card {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 2rem minmax(0, 1fr);
   gap: 0.8rem;
-  padding: 0.9rem;
+  min-width: 0;
+  padding: 1rem;
   border: 1px solid var(--line);
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.42);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.66);
+}
+
+.workflow-card > textarea,
+.workflow-card > .three-actions {
+  grid-column: 2;
+}
+
+.character-maker,
+.fighter-slots {
+  grid-column: 1 / -1;
 }
 
 .workflow-card h3 {
@@ -150,6 +189,105 @@ button:hover,
   line-height: 1.4;
 }
 
+.battle-director {
+  align-content: start;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.battle-log {
+  display: grid;
+  gap: 0.45rem;
+  max-height: 180px;
+  overflow: auto;
+  margin-bottom: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(247, 248, 251, 0.9);
+}
+
+.battle-log p {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.88rem;
+}
+
+.battle-log .system {
+  color: var(--muted);
+}
+
+.attack-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin-top: 0.7rem;
+}
+
+.attack-controls .primary {
+  grid-column: 1 / -1;
+}
+
+.animation-panel {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line);
+}
+
+.animation-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+}
+
+.animation-panel-head strong {
+  font-size: 0.92rem;
+}
+
+.animation-side-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.35rem;
+}
+
+.animation-side-controls button {
+  min-height: 2rem;
+  padding: 0.35rem 0.55rem;
+  font-size: 0.78rem;
+}
+
+.animation-side-controls button.active {
+  border-color: rgba(22, 96, 107, 0.4);
+  color: white;
+  background: #16606b;
+}
+
+.animation-library {
+  display: grid;
+  gap: 0.45rem;
+  max-height: 230px;
+  overflow: auto;
+  padding-right: 0.2rem;
+}
+
+.animation-library button {
+  justify-content: start;
+  min-height: 2.25rem;
+  padding: 0.42rem 0.55rem;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.animation-library .empty {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
 .workflow-fill {
   min-width: 0;
 }
@@ -157,9 +295,11 @@ button:hover,
 .step-badge {
   display: grid;
   place-items: center;
-  width: 2rem;
+  width: max-content;
+  min-width: 2rem;
   height: 2rem;
-  border-radius: 999px;
+  padding: 0 0.45rem;
+  border-radius: var(--radius);
   color: white;
   background: var(--accent);
   font-weight: 700;
@@ -194,7 +334,7 @@ button:hover,
 
 .maker-layout {
   display: grid;
-  grid-template-columns: minmax(180px, 280px) 1fr;
+  grid-template-columns: minmax(150px, 220px) minmax(0, 1fr);
   gap: 0.8rem;
 }
 
@@ -203,7 +343,7 @@ button:hover,
   min-height: auto;
   aspect-ratio: 1;
   border: 1px solid rgba(30, 26, 22, 0.18);
-  border-radius: 20px;
+  border-radius: var(--radius);
   background:
     linear-gradient(45deg, rgba(30,26,22,0.06) 25%, transparent 25%),
     linear-gradient(-45deg, rgba(30,26,22,0.06) 25%, transparent 25%),
@@ -222,7 +362,7 @@ button:hover,
 
 .maker-controls {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.55rem;
 }
 
@@ -232,7 +372,7 @@ button:hover,
 
 .slot-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.7rem;
 }
 
@@ -241,7 +381,7 @@ button:hover,
   gap: 0.5rem;
   padding: 0.75rem;
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: var(--radius);
   background: rgba(255, 249, 238, 0.58);
 }
 
@@ -253,7 +393,7 @@ button:hover,
 .character-library,
 .asset-library {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
   gap: 0.6rem;
   margin-top: 0.55rem;
 }
@@ -264,8 +404,9 @@ button:hover,
   gap: 0.45rem;
   padding: 0.55rem;
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: var(--radius);
   background: rgba(255, 255, 255, 0.56);
+  min-width: 0;
 }
 
 .character-card.selected,
@@ -277,7 +418,7 @@ button:hover,
 .asset-preview {
   width: 100%;
   aspect-ratio: 1;
-  border-radius: 14px;
+  border-radius: var(--radius);
   background: rgba(30, 26, 22, 0.05);
 }
 
@@ -314,9 +455,10 @@ button:hover,
 .three-stage {
   position: relative;
   overflow: hidden;
-  min-height: 600px;
+  min-height: calc(100svh - 8.5rem);
+  height: auto;
   border: 1px solid rgba(30, 26, 22, 0.2);
-  border-radius: 28px;
+  border-radius: var(--radius);
   background:
     radial-gradient(circle at 50% 40%, rgba(255,255,255,0.12), transparent 20rem),
     linear-gradient(135deg, #101827, #22332f);
@@ -326,7 +468,7 @@ button:hover,
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 600px;
+  min-height: calc(100svh - 8.5rem);
   cursor: grab;
 }
 
@@ -335,9 +477,9 @@ button:hover,
 }
 
 .prompt-lab h2 {
-  font-size: clamp(1.5rem, 3vw, 2.8rem);
-  line-height: 0.96;
-  letter-spacing: -0.04em;
+  font-size: clamp(1.3rem, 2.2vw, 2.2rem);
+  line-height: 1.04;
+  letter-spacing: 0;
 }
 
 .prompt-controls {
@@ -348,17 +490,24 @@ button:hover,
 }
 
 .prompt-status {
-  grid-column: 2;
   margin: -0.25rem 0 0;
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+#promptStatus {
+  grid-column: 2;
+}
+
+#threeStatus {
+  margin: 0.25rem 0 0;
 }
 
 textarea {
   width: 100%;
   resize: vertical;
   border: 1px solid var(--line);
-  border-radius: 22px;
+  border-radius: var(--radius);
   padding: 0.9rem 1rem;
   color: var(--ink);
   background: rgba(255, 255, 255, 0.72);
@@ -371,7 +520,7 @@ textarea {
   color: var(--accent-dark);
   font-size: 0.8rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -384,9 +533,9 @@ p {
 h1 {
   max-width: 780px;
   margin-bottom: 0.5rem;
-  font-size: clamp(2rem, 5vw, 4.6rem);
-  line-height: 0.92;
-  letter-spacing: -0.06em;
+  font-size: clamp(1.9rem, 4vw, 4rem);
+  line-height: 0.98;
+  letter-spacing: 0;
 }
 
 h2 {
@@ -414,9 +563,11 @@ h2 {
 
 .workspace {
   display: grid;
-  grid-template-columns: 280px minmax(0, 1fr) 280px;
+  grid-template-columns: minmax(240px, 280px) minmax(420px, 1fr) minmax(240px, 280px);
   gap: 1rem;
-  padding: 1rem;
+  min-height: calc(100svh - 1.5rem);
+  padding: clamp(1rem, 2vw, 1.5rem);
+  align-items: stretch;
 }
 
 .panel {
@@ -425,8 +576,9 @@ h2 {
   gap: 1rem;
   padding: 1rem;
   border: 1px solid var(--line);
-  border-radius: 26px;
+  border-radius: var(--radius);
   background: rgba(255, 255, 255, 0.46);
+  min-width: 0;
 }
 
 .panel-header {
@@ -452,7 +604,7 @@ input[type="text"],
 input[type="number"] {
   width: 100%;
   border: 1px solid var(--line);
-  border-radius: 14px;
+  border-radius: var(--radius);
   padding: 0.65rem 0.7rem;
   color: var(--ink);
   background: rgba(255, 255, 255, 0.72);
@@ -462,7 +614,7 @@ input[type="color"] {
   width: 100%;
   height: 3rem;
   border: 0;
-  border-radius: 16px;
+  border-radius: var(--radius);
   background: transparent;
 }
 
@@ -475,10 +627,11 @@ input[type="color"] {
 
 .stage-wrap {
   position: relative;
-  min-height: 58vh;
+  min-height: min(720px, calc(100svh - 4.5rem));
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   border: 1px solid rgba(30, 26, 22, 0.2);
-  border-radius: 28px;
+  border-radius: var(--radius);
   background: #15110e;
 }
 
@@ -486,7 +639,7 @@ canvas {
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 58vh;
+  min-height: 100%;
   cursor: grab;
 }
 
@@ -505,7 +658,7 @@ canvas:active {
   justify-content: space-between;
   gap: 0.7rem;
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: var(--radius);
   padding: 0.65rem 0.75rem;
   background: rgba(255, 255, 255, 0.54);
   cursor: pointer;
@@ -536,7 +689,9 @@ canvas:active {
 .timeline {
   display: grid;
   gap: 0.8rem;
-  padding: 1rem 1.2rem 1.2rem;
+  min-height: 38svh;
+  align-content: center;
+  padding: clamp(1rem, 3vw, 2rem);
 }
 
 .time-row {
@@ -556,7 +711,7 @@ input[type="range"] {
   height: 56px;
   overflow: hidden;
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: var(--radius);
   background:
     repeating-linear-gradient(90deg, rgba(30, 26, 22, 0.1) 0 1px, transparent 1px 5.55%),
     rgba(255, 255, 255, 0.46);
@@ -574,12 +729,47 @@ input[type="range"] {
   box-shadow: 0 4px 12px rgba(45, 111, 143, 0.36);
 }
 
+@media (max-width: 1180px) {
+  .battle-board,
+  .production-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .battle-board {
+    min-height: auto;
+  }
+
+  .workspace {
+    grid-template-columns: minmax(220px, 0.32fr) minmax(0, 1fr);
+  }
+
+  .inspector {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: end;
+  }
+
+  .inspector .panel-header,
+  .inspector .hint {
+    grid-column: 1 / -1;
+  }
+}
+
 @media (max-width: 1050px) {
   .hero,
   .prompt-lab,
   .three-lab,
   .workspace {
     grid-template-columns: 1fr;
+  }
+
+  .three-copy {
+    padding-right: 0;
+  }
+
+  .three-stage,
+  #threeStage {
+    min-height: 520px;
   }
 
   .hero {
@@ -597,17 +787,79 @@ input[type="range"] {
   .prompt-status {
     grid-column: 1;
   }
+
+  #promptStatus {
+    grid-column: 1;
+  }
+
+  .stage-wrap {
+    min-height: 420px;
+  }
+
+  .inspector {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 @media (max-width: 680px) {
   .shell {
-    width: min(100vw - 0.8rem, 1500px);
+    width: min(100vw - 0.7rem, 1580px);
+    gap: 0.75rem;
+    padding-top: 0.35rem;
   }
 
   .hero,
+  .prompt-lab,
+  .three-lab,
+  .workspace {
+    min-height: auto;
+    padding: 0.85rem;
+  }
+
+  .hero,
+  .prompt-lab,
+  .three-lab,
   .workspace,
   .timeline {
-    border-radius: 24px;
+    border-radius: var(--radius);
+  }
+
+  .hero-actions,
+  .three-actions,
+  .attack-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: stretch;
+  }
+
+  .maker-layout,
+  .slot-grid,
+  .inspector,
+  .tool-grid,
+  .split {
+    grid-template-columns: 1fr;
+  }
+
+  .workflow-card {
+    grid-template-columns: 1fr;
+  }
+
+  .workflow-card > textarea,
+  .workflow-card > .three-actions {
+    grid-column: 1;
+  }
+
+  .attack-controls .primary {
+    grid-column: 1;
+  }
+
+  .three-stage,
+  #threeStage {
+    min-height: 380px;
+  }
+
+  .stage-wrap {
+    min-height: 320px;
   }
 
   .time-row {

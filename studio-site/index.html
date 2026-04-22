@@ -45,14 +45,59 @@
       </section>
 
       <section class="three-lab">
-        <div class="three-copy">
+        <div class="three-header">
           <p class="eyebrow">3D Battle Lab</p>
           <h2>Build a battle in four clear steps.</h2>
           <p class="intro">
-            Use the working PNG/card tools now. The Man Hunt 3D generator needs
-            extra Python setup before it can create real GLB models.
+            Use PNG/card tools, imported GLB files, bundled outfits, or the local
+            Man Hunt/Hunyuan bridge for generated 3D fighters.
           </p>
+          <p id="threeStatus" class="prompt-status">Starting local Three.js renderer...</p>
+        </div>
 
+        <div class="battle-board">
+          <div class="three-stage">
+            <canvas id="threeStage" aria-label="3D battle scene"></canvas>
+          </div>
+
+          <section class="workflow-card battle-director">
+            <div class="step-badge">Chat</div>
+            <div class="workflow-fill">
+              <h3>Battle Director</h3>
+              <p>Describe how the fight should unfold, then trigger specific attacks.</p>
+              <div id="battleLog" class="battle-log">
+                <p>Ready for direction. Try: left fighter opens with a sword slash, right fighter dodges, then counters with a punch.</p>
+              </div>
+              <textarea
+                id="battleDirectorInput"
+                rows="4"
+                placeholder="Describe the battle: left fighter rushes in, right fighter gets hit, then right counters with a spell."
+              ></textarea>
+              <div class="attack-controls">
+                <button id="sendBattlePlan" class="primary">Direct Battle</button>
+                <button data-attack="left-punch">Left Punch</button>
+                <button data-attack="left-sword">Left Sword</button>
+                <button data-attack="right-punch">Right Punch</button>
+                <button data-attack="right-sword">Right Sword</button>
+                <button data-attack="spell">Spell Hit</button>
+                <button data-attack="fire">Fire Blast</button>
+              </div>
+              <div class="animation-panel">
+                <div class="animation-panel-head">
+                  <strong>Animation Tester</strong>
+                  <div class="animation-side-controls" aria-label="Animation target side">
+                    <button class="active" data-animation-side="left">Left</button>
+                    <button data-animation-side="right">Right</button>
+                  </div>
+                </div>
+                <input id="animationSearch" type="search" placeholder="Filter animations" />
+                <div id="animationLibrary" class="animation-library"></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="production-grid">
           <section class="workflow-card">
             <div class="step-badge">1</div>
             <div>
@@ -109,17 +154,17 @@
           <section class="workflow-card">
             <div class="step-badge">3D</div>
             <div>
-              <h3>Outfit Asset Library</h3>
-              <p>Use the downloaded Modular Character Outfits as real 3D fighters.</p>
+              <h3>Rigged Fighter Library</h3>
+              <p>Use base fighters with matching skeletons, or test outfit parts on the same rig family.</p>
               <div id="outfitLibrary" class="asset-library"></div>
             </div>
           </section>
 
-          <section class="workflow-card">
+          <section class="workflow-card fighter-slots">
             <div class="step-badge">4</div>
             <div class="workflow-fill">
               <h3>Fighter Slots</h3>
-              <p>Use PNG fighters now, import GLB models, or try Man Hunt 3D after setup.</p>
+              <p>Assign PNG fighters, import GLB models, or generate 3D from the current PNG.</p>
               <div class="slot-grid">
                 <div class="slot-card">
                   <strong>Left Fighter</strong>
@@ -153,11 +198,6 @@
               <p id="generatorStatus">Checking Man Hunt generator setup...</p>
             </div>
           </section>
-
-          <p id="threeStatus" class="prompt-status">Starting local Three.js renderer...</p>
-        </div>
-        <div class="three-stage">
-          <canvas id="threeStage" aria-label="3D battle scene"></canvas>
         </div>
       </section>
 

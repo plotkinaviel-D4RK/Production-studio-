@@ -82,6 +82,54 @@ Available in the site:
 Click `Left` or `Right` on an outfit card to place that 3D character into the
 battle scene.
 
+## Universal Base Characters
+
+The matching Quaternius `Universal Base Characters[Standard]` pack is downloaded
+and copied into a clean browser path:
+
+```text
+studio-site/assets/base-characters
+```
+
+Use `Base Male Hero` or `Base Female Hero` in the Rigged Fighter Library when
+you want a guaranteed skeleton match for the Universal Animation Library clips.
+The fantasy outfit files are skinned outfit/body parts from the same rig family,
+but the base characters are the safer default for animation testing.
+
+## Combat Animations
+
+The 3D Battle Lab includes the CC0 Standard GLB from Quaternius' Universal
+Animation Library:
+
+```text
+studio-site/assets/combat-animations/quaternius-cc0
+```
+
+Source page:
+
+```text
+https://quaternius.itch.io/universal-animation-library
+```
+
+The download was mirrored from OpenGameArt, then copied into a clean browser path:
+
+```text
+studio-site/assets/combat-animations/quaternius-cc0/AnimationLibrary_Standard.glb
+```
+
+These clips are loaded by `studio-site/three-battle.js`, shown in the on-screen
+Animation Tester, and applied to rigged GLB fighters when a clip button or
+`Start Fight Animation` is used.
+
+The loader also checks for an optional second file:
+
+```text
+studio-site/assets/combat-animations/quaternius-cc0/AnimationLibrary2_Standard.glb
+```
+
+Drop the Godot GLB from Universal Animation Library 2 there to add its combo,
+parkour, farming, and zombie clips to the same tester.
+
 ## AI Scene Generation
 
 The site works without an OpenAI key by using local fallback prompt logic.
